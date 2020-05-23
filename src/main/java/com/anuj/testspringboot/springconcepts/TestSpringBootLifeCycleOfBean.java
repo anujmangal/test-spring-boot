@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.PropertySource;
 
+//somehow spring boot only picks up files names like application.properties and app.properties but not external.properties
 @SpringBootApplication
+@PropertySource("classpath:app.properties")
 public class TestSpringBootLifeCycleOfBean {
 
 	@Autowired
@@ -31,6 +34,10 @@ public class TestSpringBootLifeCycleOfBean {
 			TestSpringBootLifeCycleOfBean testSpringBootLifeCycleOfBean =
 					applicationContext.getBean(TestSpringBootLifeCycleOfBean.class);
 			System.out.println(testSpringBootLifeCycleOfBean.getLifeCycleOfBean());
+
+			ReadingExternalPropertiesFile readingExternalPropertiesFile =
+					applicationContext.getBean(ReadingExternalPropertiesFile.class);
+			System.out.println(readingExternalPropertiesFile.readDataFromExternalProperties());
 		}
 	}
 
