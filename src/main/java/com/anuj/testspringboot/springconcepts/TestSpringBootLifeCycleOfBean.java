@@ -23,14 +23,15 @@ public class TestSpringBootLifeCycleOfBean {
 
 	public static void main(String[] args) {
 
-		ConfigurableApplicationContext applicationContext = SpringApplication.run(TestSpringBootLifeCycleOfBean.class, args);
+		try(ConfigurableApplicationContext applicationContext =
+					SpringApplication.run(TestSpringBootLifeCycleOfBean.class, args)) {
 
-		//Testing Singleton Bean (default Spring)
-		//The object is same (has same hashcode)for a singleton bean
-		TestSpringBootLifeCycleOfBean testSpringBootLifeCycleOfBean =
-				applicationContext.getBean(TestSpringBootLifeCycleOfBean.class);
-		System.out.println(testSpringBootLifeCycleOfBean.getLifeCycleOfBean());
-
+			//Testing Singleton Bean (default Spring)
+			//The object is same (has same hashcode)for a singleton bean
+			TestSpringBootLifeCycleOfBean testSpringBootLifeCycleOfBean =
+					applicationContext.getBean(TestSpringBootLifeCycleOfBean.class);
+			System.out.println(testSpringBootLifeCycleOfBean.getLifeCycleOfBean());
+		}
 	}
 
 }

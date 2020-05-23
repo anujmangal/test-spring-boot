@@ -58,26 +58,28 @@ public class TestSpringBootSameInterfaceDependencyApplication {
 
 	public static void main(String[] args) {
 
-		ConfigurableApplicationContext applicationContext = SpringApplication.run(TestSpringBootSameInterfaceDependencyApplication.class, args);
+		try(ConfigurableApplicationContext applicationContext =
+					SpringApplication.run(TestSpringBootSameInterfaceDependencyApplication.class, args)) {
 
-		TestSpringBootSameInterfaceDependencyApplication testingTestInterface =
-				applicationContext.getBean(TestSpringBootSameInterfaceDependencyApplication.class);
+			TestSpringBootSameInterfaceDependencyApplication testingTestInterface =
+					applicationContext.getBean(TestSpringBootSameInterfaceDependencyApplication.class);
 
-		// If we don't add primary to any bean, spring context fails to initialize as it can not determine which bean to choose
-		// if we add primary, that bean is chosen (highest priority)
-		System.out.println(testingTestInterface.getTestInterface());
+			// If we don't add primary to any bean, spring context fails to initialize as it can not determine which bean to choose
+			// if we add primary, that bean is chosen (highest priority)
+			System.out.println(testingTestInterface.getTestInterface());
 
-		//If we add Qualifier to one or dependency, then we can use that qualifier to autowire the dependency.
-		//If we don;t use qualifier and we do not have primary annotation on the bean, then again spring context
-		//will fail to find the bean
-		System.out.println(testingTestInterface.getTestQualifierInterface());
+			//If we add Qualifier to one or dependency, then we can use that qualifier to autowire the dependency.
+			//If we don;t use qualifier and we do not have primary annotation on the bean, then again spring context
+			//will fail to find the bean
+			System.out.println(testingTestInterface.getTestQualifierInterface());
 
 
-		//we can also autowire the name by dependency but it should be least preferred, usually qualifier and primary
-		//annotation should achieve what you are trying to do.
-		//Also, if you try to autowire but have a primary annotation declared on a bean, then primary annotation will take
-		//precedence in that case
-		System.out.println(testingTestInterface.getTestInterfaceAutowiringByName1Dependency());
-		System.out.println(testingTestInterface.getTestInterfaceAutowiringByName2Dependency());
+			//we can also autowire the name by dependency but it should be least preferred, usually qualifier and primary
+			//annotation should achieve what you are trying to do.
+			//Also, if you try to autowire but have a primary annotation declared on a bean, then primary annotation will take
+			//precedence in that case
+			System.out.println(testingTestInterface.getTestInterfaceAutowiringByName1Dependency());
+			System.out.println(testingTestInterface.getTestInterfaceAutowiringByName2Dependency());
+		}
 	}
 }
